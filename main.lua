@@ -1,0 +1,31 @@
+local day
+local part
+local filename
+
+while #arg > 0 do
+	local a = table.remove(arg, 1)
+	if string.sub(a, 1, 2) == "-d" then
+		day = require(string.sub(a, 2, #a))
+	elseif string.sub(a, 1, 2) == "-p" then
+		part = tonumber(string.sub(a, 3, #a))
+	elseif a == "-f" then
+		filename = table.remove(arg, 1)
+	end
+end
+
+function love.load()
+	local result = day.load(part or 1, filename)
+
+	if result then
+		love.system.setClipboardText(result)
+	end
+end
+
+love.draw = day.draw
+love.update = day.update
+
+function love.keypressed(key)
+	if key == "escape" then
+		love.event.quit()
+	end
+end
