@@ -1,7 +1,8 @@
 local t = {}
 local result
+local dial = 50
 
-local function p1(dial, data)
+local function p1(data)
 	result = 0
 	for _, v in ipairs(data) do
 		dial = (dial + v) % 100
@@ -9,10 +10,9 @@ local function p1(dial, data)
 			result = result + 1
 		end
 	end
-	return result
 end
 
-local function p2(dial, data)
+local function p2(data)
 	result = 0
 	for _, v in ipairs(data) do
 		local dir
@@ -58,12 +58,10 @@ function t.load(part, filename)
 	end
 
 	if part == 1 then
-		result = p1(50, data)
+		p1(data)
 	elseif part == 2 then
-		result = p2(50, data)
+		p2(data)
 	end
-
-	return result
 end
 
 function t.draw()

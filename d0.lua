@@ -1,13 +1,26 @@
 local t = {}
-local result, data
+local result
+local data = {}
+
+local function p1()
+	print(table.concat(data, "\n"))
+end
+
+local function p2()
+	print(table.concat(data, "\n"))
+end
 
 function t.load(part, filename)
 	local file = assert(io.open(filename))
 
+	for line in file:lines() do
+		table.insert(data, line)
+	end
+
 	if part == 1 then
-		result = "p1"
+		p1()
 	elseif part == 2 then
-		result = "p2"
+		p2()
 	end
 
 	return result

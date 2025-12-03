@@ -1,6 +1,6 @@
 local day
 local part
-local filename
+local filename = "inputs/test.txt"
 
 while #arg > 0 do
 	local a = table.remove(arg, 1)
