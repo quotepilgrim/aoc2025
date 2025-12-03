@@ -38,12 +38,12 @@ local function p2()
 	for _, s in ipairs(data) do
 		local offset = -11
 		local max = 0
-		local max_pos = 1
+		local max_pos = 0
 		local jolts = ""
 
 		while offset <= 0 do
 			max = 0
-			for i = max_pos, #s + offset do
+			for i = max_pos + 1, #s + offset do
 				local digit = assert(tonumber(string.sub(s, i, i)))
 				if digit > max then
 					max = digit
@@ -52,11 +52,10 @@ local function p2()
 			end
 			jolts = jolts .. tostring(max)
 			offset = offset + 1
-			max_pos = max_pos + 1
+			max_pos = max_pos
 		end
 
 		result = result + tonumber(jolts)
-		print(s, jolts)
 	end
 	result = string.format("%18.0f", result)
 end
