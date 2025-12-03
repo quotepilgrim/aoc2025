@@ -34,7 +34,31 @@ local function p1()
 end
 
 local function p2()
-	--
+	result = 0
+	for _, s in ipairs(data) do
+		local offset = -11
+		local max = 0
+		local max_pos = 1
+		local jolts = ""
+
+		while offset <= 0 do
+			max = 0
+			for i = max_pos, #s + offset do
+				local digit = assert(tonumber(string.sub(s, i, i)))
+				if digit > max then
+					max = digit
+					max_pos = i
+				end
+			end
+			jolts = jolts .. tostring(max)
+			offset = offset + 1
+			max_pos = max_pos + 1
+		end
+
+		result = result + tonumber(jolts)
+		print(s, jolts)
+	end
+	result = string.format("%18.0f", result)
 end
 
 function t.load(part, filename)
