@@ -1,8 +1,9 @@
 local t = {}
-local result, data
+local result
 
-local function p1()
+local function p1(data)
 	local invalid = {}
+
 	for _, range in ipairs(data) do
 		for i = range[1], range[2] do
 			local s = tostring(i)
@@ -15,13 +16,15 @@ local function p1()
 		end
 	end
 
-	result = 0
+	local result = 0
 	for _, i in ipairs(invalid) do
 		result = result + i
 	end
+
+	return result
 end
 
-local function p2()
+local function p2(data)
 	local invalid = {}
 
 	local function all_equals(splits)
@@ -46,7 +49,6 @@ local function p2()
 					split_end = split_end + i
 				end
 				if all_equals(splits) then
-					print(table.concat(splits, ","))
 					return true
 				end
 			end
@@ -62,16 +64,18 @@ local function p2()
 		end
 	end
 
-	result = 0
+	local result = 0
 	for _, i in ipairs(invalid) do
 		result = result + i
 	end
+
+	return result
 end
 
 function t.load(part, filename)
 	local file = assert(io.open(filename))
 
-	data = {}
+	local data = {}
 
 	for line in file:lines() do
 		for range in line:gmatch("[^,]*") do
@@ -86,9 +90,9 @@ function t.load(part, filename)
 	end
 
 	if part == 1 then
-		p1()
+		result = p1(data)
 	elseif part == 2 then
-		p2()
+		result = p2(data)
 	end
 
 	return result

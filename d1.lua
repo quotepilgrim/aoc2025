@@ -1,19 +1,21 @@
 local t = {}
 local result
-local dial = 50
 
 local function p1(data)
-	result = 0
+	local result = 0
+	local dial = 50
 	for _, v in ipairs(data) do
 		dial = (dial + v) % 100
 		if dial == 0 then
 			result = result + 1
 		end
 	end
+	return result
 end
 
 local function p2(data)
-	result = 0
+	local result = 0
+	local dial = 50
 	for _, v in ipairs(data) do
 		local dir
 		if v < 0 then
@@ -32,21 +34,9 @@ local function p2(data)
 	return result
 end
 
-local function sign(n)
-	if n > 0 then
-		return 1
-	elseif n < 0 then
-		return -1
-	end
-end
-
 function t.load(part, filename)
 	local data = {}
-	local file = io.open(filename)
-
-	if not file then
-		return
-	end
+	local file = assert(io.open(filename))
 
 	for line in file:lines() do
 		local dir, num = line:sub(1, 1), tonumber(line:sub(2, #line))
@@ -58,10 +48,12 @@ function t.load(part, filename)
 	end
 
 	if part == 1 then
-		p1(data)
+		result = p1(data)
 	elseif part == 2 then
-		p2(data)
+		result = p2(data)
 	end
+
+	return result
 end
 
 function t.draw()
