@@ -1,8 +1,8 @@
 local t = {}
-local result
+local result, data
 
 function t.load(part, filename)
-	local file = io.open(filename)
+	local file = assert(io.open(filename))
 
 	if part == 1 then
 		result = "p1"
