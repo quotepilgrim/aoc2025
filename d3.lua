@@ -52,7 +52,6 @@ local function p2()
 			end
 			jolts = jolts .. tostring(max)
 			offset = offset + 1
-			max_pos = max_pos
 		end
 
 		result = result + tonumber(jolts)
