@@ -1,5 +1,6 @@
 local t = {}
 local result
+local max, min = math.max, math.min
 
 local function p1(data)
 	local result = 0
@@ -17,7 +18,41 @@ end
 
 local function p2(data)
 	local result = 0
-	return result
+	local ranges = data.ranges
+
+	local function is_inside(r1, r2)
+		if r1[1] >= r2[1] and r1[2] <= r2[2] then
+			return true
+		end
+	end
+
+	local function intersect_right(r1, r2)
+		if r1[1] < r2[2] and r1[2] > r2[2] then
+			return true
+		end
+	end
+
+	for i = #ranges, 1, -1 do
+		for j = #ranges, 1, -1 do
+			if j ~= i then
+				local r1 = ranges[i]
+				local r2 = ranges[j]
+				if is_inside(r1, r2) then
+					table.remove(ranges, i)
+				elseif intersect_right(r1, r2) then
+					r1[1] = r2[2] + 1
+				elseif intersect_right(r2, r1) then
+					r2[1] = r1[2] + 1
+				end
+			end
+		end
+	end
+
+	for _, r in ipairs(ranges) do
+		result = result + (r[2] - r[1] + 1)
+	end
+
+	return string.format("%0.15d", result)
 end
 
 function t.load(part, filename)
