@@ -20,8 +20,26 @@ local function p2(data)
 	local result = 0
 	local ranges = data.ranges
 
-	--[[removing my attempt at part 2 for now because it's clearly the wrong thing
-	to do even though I can only be off from the correct answer by at most 9.]]
+	-- This is maximum jank but it works. Somehow.
+
+	local function merge(r1, r2)
+		if r1[2] < r2[1] or r2[2] < r1[1] then
+			return r1, r2
+		end
+		return { 1, 0 }, { min(r1[1], r2[1]), max(r1[2], r2[2]) }
+	end
+
+	table.sort(ranges, function(r1, r2)
+		return r1[1] < r2[1]
+	end)
+
+	for i = 1, #ranges - 1 do
+		ranges[i], ranges[i + 1] = merge(ranges[i], ranges[i + 1])
+	end
+
+	for _, r in ipairs(ranges) do
+		result = result + (r[2] - r[1] + 1)
+	end
 
 	return string.format("%0.15d", result)
 end
