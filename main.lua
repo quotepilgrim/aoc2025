@@ -14,6 +14,7 @@ while #arg > 0 do
 end
 
 function love.load()
+	love.graphics.setFont(love.graphics.newFont(24))
 	local result = day.load(part or 1, filename)
 
 	if result then
