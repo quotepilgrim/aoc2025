@@ -41,7 +41,7 @@ local function p2(data)
 		result = result + (r[2] - r[1] + 1)
 	end
 
-	return string.format("%0.15d", result)
+	return string.format("%15d", result)
 end
 
 function t.load(part, filename)

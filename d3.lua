@@ -56,7 +56,7 @@ local function p2(data)
 
 		result = result + tonumber(jolts)
 	end
-	return string.format("%18.0f", result)
+	return string.format("%15d", result)
 end
 
 function t.load(part, filename)
