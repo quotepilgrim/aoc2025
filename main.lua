@@ -29,4 +29,7 @@ function love.keypressed(key)
 	if key == "escape" then
 		love.event.quit()
 	end
+	if day.keypressed then
+		return day.keypressed(key)
+	end
 end

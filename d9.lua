@@ -1,6 +1,8 @@
 local t = {}
 local result
-local abs = math.abs
+local abs, min, max = math.abs, math.min, math.max
+local rects
+local rect, ri
 
 local function p1(data)
 	local result = 0
@@ -21,7 +23,33 @@ local function p1(data)
 end
 
 local function p2(data)
-	return
+	local rects = {}
+	for i = 1, #data do
+		local a = data[i]
+		for j = i + 1, #data do
+			local b = data[j]
+			local w = abs(a[1] - b[1]) + 1
+			local h = abs(a[2] - b[2]) + 1
+			local area = w * h
+
+			local x = min(a[1], b[1])
+			local y = min(a[2], b[2])
+
+			if a[1] == 94671 or b[1] == 94671 then
+				--This is the x coordinate of the red tiles that are in the
+				--two longest green lines. I found it by hand but in hindsight
+				--I could have written code to measure the length of all lines
+				--and find it that way.
+				table.insert(rects, { x, y, w, h, area, a, b })
+			end
+		end
+	end
+
+	table.sort(rects, function(a, b)
+		return a[5] < b[5]
+	end)
+
+	return rects
 end
 
 local points = {}
@@ -44,7 +72,10 @@ function t.load(part, filename)
 	if part == 1 then
 		result = p1(data)
 	elseif part == 2 then
-		result = p2(data)
+		rects = p2(data)
+		ri = #rects
+		rect = rects[ri]
+		result = rect[5]
 	end
 
 	return result
@@ -57,6 +88,40 @@ function t.draw()
 	love.graphics.setColor(1, 0.25, 0.25, 1)
 	love.graphics.points(unpack(points))
 	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.rectangle("line", rect[1] / 100, rect[2] / 100, rect[3] / 100, rect[4] / 100)
+end
+
+love.keyboard.setKeyRepeat(true)
+
+function t.keypressed(k)
+	--Checking each rectangle manually LOL.
+	--I could probably have tested line intersections between all four sides
+	--of each rectangle and the lines that make up the large polygon but just
+	--looking at the rectangles was faster than coding that so here we are.
+	if k == "pagedown" then
+		if love.keyboard.isDown("lshift") then
+			ri = max(ri - 100, 1)
+		else
+			ri = max(ri - 1, 1)
+		end
+		rect = rects[ri]
+		result = rect[5]
+		love.system.setClipboardText(result)
+	elseif k == "pageup" then
+		if love.keyboard.isDown("lshift") then
+			ri = min(ri + 100, #rects)
+		else
+			ri = min(ri + 1, #rects)
+		end
+		rect = rects[ri]
+		result = rect[5]
+		love.system.setClipboardText(result)
+	end
+	if k == "f1" then
+		print(table.concat(rect[6], ","))
+		print(table.concat(rect[7], ","))
+	end
+	print(ri)
 end
 
 return t
