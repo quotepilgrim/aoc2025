@@ -21,17 +21,22 @@ local function p1(data)
 end
 
 local function p2(data)
-	print(table.concat(data, "\n"))
+	return
 end
 
+local points = {}
 function t.load(part, filename)
 	local file = assert(io.open(filename))
 	local data = {}
+
+	love.window.setMode(1000, 1000)
+	love.graphics.setPointSize(2)
 
 	for line in file:lines() do
 		local row = {}
 		for match in line:gmatch("[^,]+") do
 			table.insert(row, tonumber(match))
+			table.insert(points, tonumber(match) / 100)
 		end
 		table.insert(data, row)
 	end
@@ -47,6 +52,11 @@ end
 
 function t.draw()
 	love.graphics.print(result or "")
+	love.graphics.setColor(0.5, 1, 0.5, 1)
+	love.graphics.polygon("line", unpack(points))
+	love.graphics.setColor(1, 0.25, 0.25, 1)
+	love.graphics.points(unpack(points))
+	love.graphics.setColor(1, 1, 1, 1)
 end
 
 return t
