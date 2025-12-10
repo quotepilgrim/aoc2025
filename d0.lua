@@ -2,15 +2,11 @@ local t = {}
 local result
 
 local function p1(data)
-	local result = 0
 	print(table.concat(data, "\n"))
-	return result
 end
 
 local function p2(data)
-	local result = 0
 	print(table.concat(data, "\n"))
-	return result
 end
 
 function t.load(part, filename)
