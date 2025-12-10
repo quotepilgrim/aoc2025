@@ -1,7 +1,7 @@
 local abs, min, max = math.abs, math.min, math.max
 return function(data)
 	--This solution was implemented after manually finding the answer as
-	--mentioned in p2 and t.keypressed. It relies on knowing that the biggest
+	--described in day 9's main file. It relies on knowing that the biggest
 	--possible rectangle that fits inside the polygon must contain the rightmost
 	--point from one of the two longest lines (based on the polygon's shape)
 	local max_length = 0
