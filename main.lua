@@ -5,9 +5,9 @@ local filename = "inputs/test.txt"
 while #arg > 0 do
 	local a = table.remove(arg, 1)
 	if string.sub(a, 1, 2) == "-d" then
-		day = require(string.sub(a, 2, #a))
+		day = require(a:sub(2, #a))
 	elseif string.sub(a, 1, 2) == "-p" then
-		part = tonumber(string.sub(a, 3, #a))
+		part = tonumber(a:sub(3, #a))
 	elseif a == "-f" then
 		filename = table.remove(arg, 1)
 	end
