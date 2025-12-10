@@ -39,7 +39,7 @@ local function p2(data)
 				--two longest green lines. I found it by hand but in hindsight
 				--I could have written code to measure the length of all lines
 				--and find it that way.
-				table.insert(rects, { x, y, w, h, area, a, b })
+				table.insert(rects, { x, y, w, h, area })
 			end
 		end
 	end
@@ -98,7 +98,10 @@ local function p2a(data)
 			end
 		end
 	end
-
+	--On a side note, I think the way I'm checking for invalid rectangles could
+	--also eliminate some valid rectangles if some of the outer points in the
+	--polygon line up with the points at the right end of the longest lines,
+	--but it doesn't seem to do that on my input.
 	return result
 end
 
@@ -175,10 +178,9 @@ function t.keypressed(k)
 		rect = rects[ri]
 		result = rect[5]
 		love.system.setClipboardText(result)
-	end
-	if k == "f1" then
-		print(table.concat(rect[6], ","))
-		print(table.concat(rect[7], ","))
+	elseif k == "f1" then
+		print(rect[1] .. "," .. rect[2])
+		print(rect[1] + rect[3] - 1 .. "," .. rect[2] + rect[4] - 1)
 	end
 	print(ri)
 end
