@@ -62,12 +62,12 @@ function t.load(part, filename)
 		local buttons = {}
 
 		for i = 2, #row - 1 do
-			local button = {}
+			local button = 0
 			matches = row[i]:gmatch("[^,]+")
 			for match in matches do
-				table.insert(button, bit.lshift(1, match))
+				button = button + 2 ^ match
 			end
-			table.insert(buttons, bit.bxor(unpack(button)))
+			table.insert(buttons, button)
 		end
 
 		table.insert(data, { target = tonumber(target, 2), buttons = buttons })
