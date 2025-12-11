@@ -31,9 +31,7 @@ local function p1(data)
 			for j = 0, 15 do
 				if bit.band(pattern, bit.lshift(1, j)) > 0 then
 					if buttons[j + 1] then
-						for _, num in ipairs(buttons[j + 1]) do
-							lights = bit.bxor(lights, num)
-						end
+						lights = bit.bxor(lights, buttons[j + 1])
 					end
 				end
 			end
@@ -69,7 +67,7 @@ function t.load(part, filename)
 			for match in matches do
 				table.insert(button, bit.lshift(1, match))
 			end
-			table.insert(buttons, button)
+			table.insert(buttons, bit.bxor(unpack(button)))
 		end
 
 		table.insert(data, { target = tonumber(target, 2), buttons = buttons })
