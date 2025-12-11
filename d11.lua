@@ -2,11 +2,11 @@ local t = {}
 local result
 
 local function p1(data)
-	local stack = { data.you } --should use deque but Lua doesn't have it by default
+	local stack = { data.you }
 
 	local result = 0
 	while #stack > 0 do
-		local node = table.remove(stack, 1)
+		local node = table.remove(stack)
 
 		for _, v in ipairs(node) do
 			table.insert(stack, data[v])
@@ -20,7 +20,7 @@ local function p1(data)
 end
 
 local function p2(data)
-	return false
+	return nil
 end
 
 function t.load(part, filename)

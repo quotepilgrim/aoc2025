@@ -2,7 +2,7 @@ local t = {}
 local result
 local abs, min, max = math.abs, math.min, math.max
 local rect, ri
-local p2a = require("alt.d9p2a")
+local p2a = require("lib.d9p2a")
 
 local function p1(data)
 	local result = 0
